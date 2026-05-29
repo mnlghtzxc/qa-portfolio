@@ -24,7 +24,7 @@
 
 [📁 Перейти к проекту](./projects/delivery-service-testing)
 
-## Инструменты, с которыми работаю
+## Инструменты
 Postman • Charles • DevTools • Android Studio • Xcode • Figma • SQL (PostgreSQL) • Jira
 
 ## Контакты
