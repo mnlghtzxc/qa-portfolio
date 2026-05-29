@@ -1,2 +1,2 @@
 # qa-portfolio
-QA portfolio with web, API and game testing projects
+QA portfolio with testing projects
