@@ -25,7 +25,7 @@
 [📁 Перейти к проекту](./projects/delivery-service-testing)
 
 ## Инструменты, с которыми работаю
-Postman • Charles • DevTools • Android Studio • Xcode • Figma • SQL (PostgreSQL) • Jira • Yandex Tracker
+Postman • Charles • DevTools • Android Studio • Xcode • Figma • SQL (PostgreSQL) • Jira
 
 ## Контакты
 - Email: 9moonlight3@gmail.com
