@@ -1,96 +1,32 @@
-# QA Projects
-# QA Engineer Portfolio
+# QA Portfolio
 
-Привет! Меня зовут Владислав.
+Привет! Я Владислав, Manual QA Engineer с опытом тестирования web/mobile приложений, API и production-инцидентов. В этом репозитории собраны примеры моей работы, которые демонстрируют подход к тестированию, умение находить уязвимые места и анализировать root cause.
 
-Я QA Engineer с опытом функционального тестирования web/mobile приложений, UI/API тестирования, анализа багов и работы с тестовой документацией.
+Сейчас активно углубляюсь в backend/API, SQL и клиент-серверное взаимодействие, чтобы расти в GameDev QA или сильных продуктовых командах.
 
-Сейчас активно развиваюсь в направлении backend/API/SQL и углубляю техническую часть QA:
+## Проекты
 
-* клиент-серверная архитектура
-* HTTP/API
-* тестирование backend логики
-* race conditions
-* идемпотентность
-* атомарность
-* синхронизация клиент/сервер
+### 1. Reward System Testing
+Тестирование игровой механики квестов и наград.  
+**Фокус:** клиент-серверная логика, синхронизация, идемпотентность, гонки запросов.
 
----
+[📁 Перейти к проекту](./projects/reward-system-testing)
 
-# Проекты
+### 2. Desktop Game Testing
+Исследовательское тестирование 3D-шутера без документации.  
+**Фокус:** коллизии, AI, обработка ввода, стабильность, root cause analysis.
 
-## 1. Reward System Testing
+[📁 Перейти к проекту](./projects/desktop-game-testing)
 
-Тестирование системы наград и квестов в игровой механике.
+### 3. Delivery Service Testing
+Функциональное и API-тестирование сервиса аренды.  
+**Фокус:** валидация, статусная модель, API-контракты, проверка целостности данных через SQL.
 
-Что внутри:
+[📁 Перейти к проекту](./projects/delivery-service-testing)
 
-* анализ рисков
-* клиент-серверная логика
-* race conditions
-* мультитап
-* реконнект
-* синхронизация данных
-* тест-кейсы и баги
+## Инструменты, с которыми работаю
+Postman • Charles • DevTools • Android Studio • Xcode • Figma • SQL (PostgreSQL) • Jira • Yandex Tracker
 
-📁 Проект:
-`reward-system-testing`
-
----
-
-## 2. Desktop Game Testing
-
-Исследовательское тестирование desktop-игры.
-
-Что внутри:
-
-* exploratory testing
-* баг-репорты
-* AI и коллизии
-* обработка ввода
-* fullscreen / Alt+Tab
-* анализ критичности багов
-
-📁 Проект:
-`desktop-game-testing`
-
----
-
-## 3. Delivery Service Testing
-
-Функциональное и API тестирование сервиса доставки.
-
-Что внутри:
-
-* web/mobile testing
-* API testing
-* тестирование статусов
-* валидация полей
-* синхронизация UI/API
-* тест-дизайн
-* анализ бизнес-рисков
-
-📁 Проект:
-`delivery-service-testing`
-
----
-
-# Инструменты
-
-* Postman
-* DevTools
-* Charles Proxy
-* Jira
-* TestRail
-* SQL (basic/intermediate)
-* Git/GitHub
-* Android Studio (basic)
-* Figma
-
----
-
-# Контакты
-
-GitHub: будет заполнено позже
-LinkedIn: будет заполнено позже
-Email: будет заполнено позже
+## Контакты
+- Email: 9moonlight3@gmail.com
+- Telegram: [@mnlghtzx](https://t.me/mnlghtzx)
