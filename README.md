@@ -6,23 +6,24 @@
 
 ## Проекты
 
-### 1. Reward System Testing
+### 🔹 API Testing (json-server)
+- [Тестирование API json-server](./projects/API_testing_json_server)
+Тестирование REST API с кастомной серверной валидацией.  
+**Фокус:** CRUD E2E-сценарии, проверка контракта ошибок, Post-response скрипты в Postman.
+
+### 🎮 GameDev QA
+- [Reward System Testing](./projects/reward-system-testing)
 Тестирование игровой механики квестов и наград.  
 **Фокус:** клиент-серверная логика, синхронизация, идемпотентность, гонки запросов.
 
-[📁 Перейти к проекту](./projects/reward-system-testing)
-
-### 2. Desktop Game Testing
+- [Desktop Game Testing](./projects/desktop-game-testing)
 Исследовательское тестирование 3D-шутера без документации.  
 **Фокус:** коллизии, AI, обработка ввода, стабильность, root cause analysis.
 
-[📁 Перейти к проекту](./projects/desktop-game-testing)
-
-### 3. Delivery Service Testing
+### 🌐 Web/Mobile
+- [Delivery Service Testing](./projects/delivery-service-testing)
 Функциональное и API-тестирование сервиса аренды.  
 **Фокус:** валидация, статусная модель, API-контракты, проверка целостности данных через SQL.
-
-[📁 Перейти к проекту](./projects/delivery-service-testing)
 
 ## Инструменты
 Postman • Charles • DevTools • Android Studio • Xcode • Figma • SQL (PostgreSQL) • Jira
