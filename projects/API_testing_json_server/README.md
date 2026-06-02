@@ -8,11 +8,17 @@
 
 ## Что тестируется
 
-Сущность **Post**:                                                                                          ## Результаты запуска
+Сущность **Post**:                                                                                          
+
+## Результаты запуска
 
 ### Collection Runner
 
-![Collection Runner](./projects/API_testing_json_server/screenshots/collection_runner_and_structure.png)
+![Collection Runner](/projects/API_testing_json_server/screenshots/collection_runner_and_structure.png)
+
+## Пример автоматических проверок
+
+![Test Results](/projects/API_testing_json_server/screenshots/post_response_example.png)
 
 * GET /posts
 * GET /posts/:id
