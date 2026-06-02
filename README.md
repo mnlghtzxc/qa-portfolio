@@ -7,21 +7,21 @@
 ## Проекты
 
 ### 🔹 API Testing (json-server)
-- [Тестирование API json-server](./projects/API_testing_json_server)
+- [Тестирование API локального json-server с валидацией](./projects/API_testing_json_server)
 Тестирование REST API с кастомной серверной валидацией.  
 **Фокус:** CRUD E2E-сценарии, проверка контракта ошибок, Post-response скрипты в Postman.
 
 ### 🎮 GameDev QA
-- [Reward System Testing](./projects/reward-system-testing)
+- [Тестирование системы наград](./projects/reward-system-testing)
 Тестирование игровой механики квестов и наград.  
 **Фокус:** клиент-серверная логика, синхронизация, идемпотентность, гонки запросов.
 
-- [Desktop Game Testing](./projects/desktop-game-testing)
+- [Тестирование 3D-шутера](./projects/desktop-game-testing)
 Исследовательское тестирование 3D-шутера без документации.  
 **Фокус:** коллизии, AI, обработка ввода, стабильность, root cause analysis.
 
 ### 🌐 Web/Mobile
-- [Delivery Service Testing](./projects/delivery-service-testing)
+- [Тестирование сервиса доставки](./projects/delivery-service-testing)
 Функциональное и API-тестирование сервиса аренды.  
 **Фокус:** валидация, статусная модель, API-контракты, проверка целостности данных через SQL.
 
