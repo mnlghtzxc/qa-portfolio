@@ -58,7 +58,7 @@ REST API локального json-server, расширенного кастом
 
 ## 🚀 Как запустить
 ```bash
-git clone <url-твоего-репозитория>
+git clone <https://github.com/mnlghtzxc/qa-portfolio/tree/main>
 cd qa-portfolio-main/projects/API_testing_json_server
 npm install
 node server.js
