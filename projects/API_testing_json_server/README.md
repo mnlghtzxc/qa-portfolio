@@ -46,8 +46,6 @@ REST API локального json-server, расширенного кастом
 | BUG-001 | id сохранялся как строка в db.json    | Medium      | Исправлено |
 | BUG-002 | DELETE возвращает 200 вместо 204      | Minor       | Известная особенность json-server |
 
-Подробные отчёты: [bugs/BUG-001.md](./bugs/BUG-001.md), [bugs/BUG-002.md](./bugs/BUG-002.md)
-
 ## 🖼️ Скриншоты
 
 **Структура коллекции и успешный прогон Collection Runner**  
