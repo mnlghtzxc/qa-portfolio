@@ -89,7 +89,7 @@ INSERT INTO posts (user_id, title, body) VALUES
 ((SELECT id FROM users WHERE username = 'lisa'), 'Misli moderatora', 'kushat i ne spat');
 
 -- Попытка вставки с несуществующим user_id (ожидаемая ошибка)
-INSERT INTO posts (user_id, title, body) VALUES (999, 'unreal', 'unreal');
+-- INSERT INTO posts (user_id, title, body) VALUES (999, 'unreal', 'unreal');
 -- Error: FOREIGN KEY constraint failed
 
 -- 5. JOIN'ы
