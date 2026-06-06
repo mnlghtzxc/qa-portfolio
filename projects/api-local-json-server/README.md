@@ -49,10 +49,10 @@ REST API локального json-server, расширенного кастом
 ## 🖼️ Скриншоты
 
 **Структура коллекции и успешный прогон Collection Runner**  
-![Collection Runner](/projects/API_testing_json_server/screenshots/collection_runner_and_structure.png)
+![Collection Runner](./screenshots/collection_runner_and_structure.png)
 
 **Пример проверок в ответе POST /posts**  
-![Test Results](/projects/API_testing_json_server/screenshots/post_response_example.png)
+![Test Results](./screenshots/post_response_example.png)
 
 ## 🚀 Как запустить
 
