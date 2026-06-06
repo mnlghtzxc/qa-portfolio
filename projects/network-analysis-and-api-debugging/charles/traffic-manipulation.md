@@ -19,7 +19,7 @@
 
 **Скриншот:**
 
-![SSL Proxying](./charles-proxy-testing/screenshots/ssl-proxying.png)
+![SSL Proxying](./screenshots/ssl-proxying.png)
 
 ---
 
@@ -32,7 +32,7 @@
 
 **Скриншот:**
 
-![Breakpoint](./charles-proxy-testing/screenshots/breakpoint-modification.png)
+![Breakpoint](./screenshots/breakpoint-modification.png)
 
 ---
 
@@ -46,7 +46,7 @@ API принял запрос с дополнительным заголовко
 
 **Скриншот:**
 
-![Rewrite Headers](./charles-proxy-testing/screenshots/rewrite-headers.png)
+![Rewrite Headers](./screenshots/rewrite-headers.png)
 
 ---
 
@@ -60,7 +60,7 @@ API принял запрос с дополнительным заголовко
 
 **Скриншот:**
 
-![Status Code Rewrite](./charles-proxy-testing/screenshots/status-code-change.png)
+![Status Code Rewrite](./screenshots/status-code-change.png)
 
 ---
 
@@ -77,4 +77,4 @@ API принял запрос с дополнительным заголовко
 
 **Скриншот:**
 
-![Map Local](./charles-proxy-testing/screenshots/map-local-response.png)
+![Map Local](./screenshots/map-local-response.png)
