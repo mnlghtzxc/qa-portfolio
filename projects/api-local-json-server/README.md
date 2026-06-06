@@ -46,6 +46,13 @@ REST API локального json-server, расширенного кастом
 | BUG-001 | id сохранялся как строка в db.json    | Medium      | Исправлено |
 | BUG-002 | DELETE возвращает 200 вместо 204      | Minor       | Известная особенность json-server |
 
+## 📂 Структура проекта
+- [`server.js`](./server.js) — кастомный сервер с валидацией
+- [`db.json`](./db.json) — тестовые данные (посты)
+- [`package.json`](./package.json) — зависимости (json-server)
+- [`JSON Server API Tests (Со скриптами).postman_collection.json`](./JSON%20Server%20API%20Tests%20(Со%20скриптами).postman_collection.json) — коллекция Postman с 26 тестами
+- [`screenshots`](./screenshots) — скриншоты результатов
+
 ## 🖼️ Скриншоты
 
 **Структура коллекции и успешный прогон Collection Runner**  
