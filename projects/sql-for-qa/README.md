@@ -54,11 +54,11 @@
 ## Структура проекта
 - `queries.sql` — полный набор запросов с комментариями
 - `sqlite_config.txt` — настройки отображения и поведения SQLite
-- `screenshots/` — скриншоты результатов ключевых запросов
+- [`screenshots`](./screenshots) — скриншоты результатов ключевых запросов
 
 ## Скриншоты
-1. `select_all_users.png` — вывод всех пользователей
-2. `group_by_role.png` — группировка по ролям с подсчётом
-3. `left_join_orphans.png` — поиск потерянных связей
-4. `rollback_demo.png` — демонстрация отката транзакции
-5. `cascade_delete.png` — каскадное удаление поста при удалении пользователя
+1. [`select_all_users_and_posts.png`](./screenshots/select_all_users_and_posts.png) — вывод всех пользователей
+2. [`group_by_role.png`](./screenshots/group_by_role.png) — группировка по ролям с подсчётом
+3. [`left_join_orphans.png`](./screenshots/left_join_orphans.png) — поиск потерянных связей
+4. [`rollback.png`](./screenshots/rollback.png) — демонстрация отката транзакции
+5. [`cascade_delete.png`](./screenshots/cascade_delete.png) — каскадное удаление поста при удалении пользователя
