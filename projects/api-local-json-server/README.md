@@ -65,7 +65,9 @@ REST API локального json-server, расширенного кастом
 
 ```bash
 git clone https://github.com/mnlghtzxc/qa-portfolio.git
-cd qa-portfolio/projects/API_testing_json_server
+cd qa-portfolio/projects/api-local-json-server
 npm install
 node server.js
 ```
+
+- Импортируйте коллекцию в Postman и создайте окружение с переменной base_url = http://localhost:3000
