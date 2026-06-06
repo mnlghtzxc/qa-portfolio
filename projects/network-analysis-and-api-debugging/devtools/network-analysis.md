@@ -36,10 +36,10 @@ JSONPlaceholder
 
 ## Артефакты
 
-* screenshots/1-network-overview.png
-* screenshots/2-request-headers.png
-* screenshots/3-response-body.png
-* session.har
+* [Network overview](./screenshots/map-local-response.png)
+* [Request-headers](./screenshots/request-headers.png)
+* [Response-body](.//screenshots/response-body.png)
+* [session.har](./session.har)
 
 ## Полученные навыки
 
