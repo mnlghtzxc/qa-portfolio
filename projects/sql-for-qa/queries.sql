@@ -78,7 +78,7 @@ CREATE TABLE posts (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Посты от всех активных пользователей (использую подзапросы для надёжной привязки)
+-- Посты для пользователей (использую подзапросы для надёжной привязки)
 INSERT INTO posts (user_id, title, body) VALUES 
 ((SELECT id FROM users WHERE username = 'sasha_qa'), 'Nazvanie', 'Soderzhanie'),
 ((SELECT id FROM users WHERE username = 'bug_hunter'), 'Bolshoi ohotnik', 'Lubit ohotu'),
@@ -89,8 +89,8 @@ INSERT INTO posts (user_id, title, body) VALUES
 ((SELECT id FROM users WHERE username = 'lisa'), 'Misli moderatora', 'kushat i ne spat');
 
 -- Попытка вставки с несуществующим user_id (ожидаемая ошибка)
--- INSERT INTO posts (user_id, title, body) VALUES (999, 'unreal', 'unreal');
--- Error: FOREIGN KEY constraint failed
+INSERT INTO posts (user_id, title, body) VALUES (999, 'unreal', 'unreal');
+Error: FOREIGN KEY constraint failed
 
 -- 5. JOIN'ы
 -- INNER JOIN: посты с авторами
