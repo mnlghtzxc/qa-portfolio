@@ -27,7 +27,7 @@
 
 ## Выполненные сценарии
 
-### DevTools
+### DevTools [Перейти](./devtools/network-analysis.md)
 
 - фильтрация XHR/Fetch запросов;
 - анализ заголовков;
@@ -35,7 +35,7 @@
 - анализ тела ответа;
 - экспорт HAR-файла.
 
-### Charles Proxy
+### Charles Proxy [Перейти](./charles/traffic-manipulation.md)
 
 - SSL Proxying;
 - Breakpoints;
