@@ -29,6 +29,15 @@
 - **Response headers** (`content-type`, `cache-control`, `cf-cache-status`, `x-ratelimit-*`)
 - **Тело ответа** (структура JSON, наличие ожидаемых полей)
 
+### 📸 Общий вид вкладки Network
+![Общий вид Network](./screenshots/network-overview.png)
+
+### 📸 Заголовки запроса
+![Request Headers](./screenshots/request-headers.png)
+
+### 📸 Тело ответа
+![Response Body](./screenshots/response-body.png)
+
 ## 🔎 Как я применяю это в тестировании
 1. **Локализация бага:** если пользователь видит пустой список, открываю Network → нахожу запрос списка → проверяю статус и тело. Если статус 200 и данные есть — баг на фронте. Если 500 — проблема на бэкенде.
 2. **Проверка кэширования:** если данные не обновляются, смотрю заголовки `cache-control` и `age` — возможно, клиент отдаёт устаревший кэш.
@@ -36,9 +45,6 @@
 4. **Документирование инцидента:** экспортирую HAR-файл, чтобы приложить к баг-репорту и показать точный запрос/ответ.
 
 ## 📂 Артефакты
-- [Общий вид вкладки Network](./screenshots/network-overview.png)
-- [Заголовки запроса](./screenshots/request-headers.png)
-- [Тело ответа](./screenshots/response-body.png)
 - [HAR-файл сессии](./session.har)
 
 ## 📌 Примечание
