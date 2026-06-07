@@ -36,7 +36,7 @@ JSONPlaceholder
 
 ## Артефакты
 
-* [Network overview](./screenshots/map-local-response.png)
+* [Network overview](./screenshots/network-overview.png)
 * [Request-headers](./screenshots/request-headers.png)
 * [Response-body](.//screenshots/response-body.png)
 * [session.har](./session.har)
