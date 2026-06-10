@@ -1,25 +1,48 @@
-version: '3.9'
+# docker-compose.yml — описание сервисов (контейнеров) для тестового стенда
+# Docker Compose поднимает оба сервиса одной командой: docker compose up -d
+
+version: '3.9'   # версия схемы (устарела, можно удалить, но без неё тоже работает)
 
 services:
+
+  # Сервис базы данных PostgreSQL
   db:
+    # Используем готовый образ PostgreSQL версии 15 на базе Alpine (лёгкий)
     image: postgres:15-alpine
+    
+    # Переменные окружения для настройки базы данных
     environment:
-      POSTGRES_USER: qa
-      POSTGRES_PASSWORD: qa123
-      POSTGRES_DB: products_db
+      POSTGRES_USER: qa                 # имя пользователя БД
+      POSTGRES_PASSWORD: qa123          # пароль пользователя БД
+      POSTGRES_DB: products_db          # имя создаваемой базы данных
+    
+    # Монтируем локальный файл init.sql в директорию инициализации контейнера
+    # PostgreSQL автоматически выполнит скрипт при первом запуске
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+    # Пробрасываем порт 5432 с хоста на порт 5432 внутри контейнера
+    # Это позволяет подключаться к БД с хостовой машины (например, через DBeaver)
     ports:
       - "5432:5432"
 
+  # Сервис API — наше Flask-приложение
   api:
+    # Сборка образа из Dockerfile, лежащего в папке app
     build: ./app
+    
+    # Пробрасываем порт 5000 с хоста на порт 5000 внутри контейнера
+    # Через этот порт будем отправлять curl-запросы к API
     ports:
       - "5000:5000"
+    
+    # Переменные окружения для подключения к базе данных
     environment:
-      DB_HOST: db
-      DB_NAME: products_db
-      DB_USER: qa
-      DB_PASS: qa123
+      DB_HOST: db                       # имя сервиса (контейнера) БД, через него идёт обращение
+      DB_NAME: products_db              # имя базы данных
+      DB_USER: qa                       # пользователь БД
+      DB_PASS: qa123                    # пароль пользователя БД
+    
+    # Указываем, что сервис api зависит от db и должен запускаться после него
     depends_on:
       - db
