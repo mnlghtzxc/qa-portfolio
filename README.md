@@ -13,6 +13,7 @@ QA-инженер с опытом работы в продуктах с мног
 **Работа с данными:** SQL (SQLite, PostgreSQL) — JOIN, агрегация, подзапросы, транзакции  
 **Мобильное тестирование:** Android Studio (эмулятор, логи), Xcode (симулятор)  
 **Баг-трекинг:** YouTrack, YandexTracker
+**Контроль версий и CI/CD:** Git (ветвление, слияние, разрешение конфликтов), GitHub (Pull Requests, Actions). Пример: [репозиторий git-practice](https://github.com/mnlghtzxc/qa-git-practice) с историей коммитов и рабочим CI-пайплайном
 
 ---
 
