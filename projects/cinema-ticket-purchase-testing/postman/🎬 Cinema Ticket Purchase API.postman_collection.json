@@ -1,0 +1,1069 @@
+{
+  "info": {
+    "_postman_id": "6f61f745-f1f0-441a-b4d8-e43b389eea97",
+    "name": "🎬 Cinema Ticket Purchase API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "38719536"
+  },
+  "item": [
+    {
+      "name": "🟢 Client (пользовательские эндпоинты)",
+      "item": [
+        {
+          "name": "Показать список доступных сеансов",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Проверяем, что статус 200",
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Проверяем, что ответ — JSON и содержит поле sessions",
+                  "pm.test(\"Response has sessions array\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('sessions');",
+                  "    pm.expect(jsonData.sessions).to.be.an('array');",
+                  "});",
+                  "",
+                  "// Проверяем, что каждый сеанс имеет все необходимые поля",
+                  "pm.test(\"Each session has required fields\", function () {",
+                  "    var sessions = pm.response.json().sessions;",
+                  "    sessions.forEach(function(session) {",
+                  "        pm.expect(session).to.have.property('session_id');",
+                  "        pm.expect(session).to.have.property('movie');",
+                  "        pm.expect(session).to.have.property('hall');",
+                  "        pm.expect(session).to.have.property('free_seats');",
+                  "        pm.expect(session).to.have.property('start_time');",
+                  "        pm.expect(session.free_seats).to.be.a('number');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sessions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sessions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Покупка билета id=created_ticket_id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", () => {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Response contains ticket object\", () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('message');",
+                  "    pm.expect(json).to.have.property('ticket');",
+                  "    pm.expect(json.ticket).to.have.property('id');",
+                  "    pm.expect(json.ticket).to.have.property('status', 'purchased');",
+                  "    pm.expect(json.ticket).to.have.property('price');",
+                  "    pm.expect(json.ticket.price).to.be.a('number');",
+                  "});",
+                  "",
+                  "let jsonResponse = pm.response.json();",
+                  "",
+                  "// Сохраняем ID купленного билета в переменную коллекции",
+                  "if (pm.response.code === 201) {",
+                  "    pm.collectionVariables.set(\"created_ticket_id\", jsonResponse.ticket.id);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": 1,\n  \"user_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tickets/purchase",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "purchase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Возврат билета id=created_ticket_id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Переменная created_ticket_id существует\", function () {",
+                  "    pm.expect(pm.collectionVariables.get(\"created_ticket_id\")).to.exist;",
+                  "});",
+                  "pm.test(\"Статус-код 200 (возврат успешен)\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Билет переведён в статус 'refund'\", function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.ticket).to.have.property('status', 'refund');",
+                  "    pm.expect(jsonData).to.have.property('message', 'Ticket refunded successfully');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/tickets/{{created_ticket_id}}/refund",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "{{created_ticket_id}}",
+                "refund"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Возврат билета (Негативный - повторный возврат id=created_ticket_id)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Переменная created_ticket_id существует\", function () {",
+                  "    pm.expect(pm.collectionVariables.get(\"created_ticket_id\")).to.exist;",
+                  "});",
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Response body contains error message\", function () {",
+                  "    pm.expect(pm.response.text()).to.include(\"refund\");",
+                  "    pm.expect(pm.response.text()).to.include(\"status\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/tickets/{{created_ticket_id}}/refund",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "{{created_ticket_id}}",
+                "refund"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Покупка билета (Негативный - без session_id)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", () => {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test(\"Response contains error message\", () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('error');",
+                  "    pm.expect(json.error).to.include('session_id');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tickets/purchase",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "purchase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Покупка билета (Негативный - несуществующий сеанс)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.test(\"Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"Error message is 'Session not found'\", function () {",
+                  "    pm.expect(json).to.have.property('error');",
+                  "    pm.expect(json.error).to.eql('Session not found');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": 999,\n  \"user_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tickets/purchase",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tickets",
+                "purchase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Получить список билетов юзера",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response has tickets array\", () => {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('tickets');",
+                  "    pm.expect(json.tickets).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/1/tickets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "1",
+                "tickets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Получить список билетов (Негативный - пользователь не найден)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});",
+                  "pm.test(\"Response body contains error message\", function () {",
+                  "    pm.expect(pm.response.text()).to.include('User not found');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/999/tickets",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "999",
+                "tickets"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔵 Admin (административные эндпоинты)",
+      "item": [
+        {
+          "name": "Halls (Залы)",
+          "item": [
+            {
+              "name": "Показать список доступных залов",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test(\"Halls array is not empty\", function () {",
+                      "    pm.expect(pm.response.json().halls).to.have.length.above(0);",
+                      "});",
+                      "pm.test(\"Halls array contains correct fields\", function () {",
+                      "    pm.expect(pm.response.json().halls).to.satisfy(function (halls) {",
+                      "        return halls.every(function (hall) {",
+                      "            return hall.hasOwnProperty('id') &&",
+                      "                   hall.hasOwnProperty('name') &&",
+                      "                   hall.hasOwnProperty('base_price') &&",
+                      "                   hall.hasOwnProperty('capacity');",
+                      "        });",
+                      "    });",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/halls",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "halls"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создать новый зал id=created_hall_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "pm.test(\"Response contains message 'Hall created'\", function () {",
+                      "    pm.expect(pm.response.text()).to.include(\"Hall created\");",
+                      "});",
+                      "pm.test(\"Response contains hall object with correct properties\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.hall.base_price).to.be.a('number');",
+                      "    pm.expect(jsonData.hall.capacity).to.be.a('number');",
+                      "    pm.expect(jsonData.hall.id).to.be.a('number');",
+                      "    pm.expect(jsonData.hall.name).to.be.a('string');",
+                      "});",
+                      "",
+                      "let jsonResponse = pm.response.json();",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"created_hall_id\", jsonResponse.hall.id);",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Test Hall\",\n  \"capacity\": 20,\n  \"base_price\": 300.00\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/halls",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "halls"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление зала (Негативный - у зала есть сеансы)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Нельзя удалить зал с сессиями — статус 409\", () => {",
+                      "    pm.response.to.have.status(409);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/halls/3",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "halls",
+                    "3"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Movies (Фильмы)",
+          "item": [
+            {
+              "name": "Показать список доступных фильмов",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "let jsonResponse = pm.response.json();",
+                      "pm.test(\"Статус-код 200 OK\", () => {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test(\"Ответ содержит массив фильмов\", () => {",
+                      "    pm.expect(jsonResponse).to.have.property('movies');",
+                      "    pm.expect(jsonResponse.movies).to.be.an('array');",
+                      "});",
+                      "pm.test(\"Каждый фильм содержит обязательные поля\", () => {",
+                      "    if (jsonResponse.movies.length > 0) {",
+                      "        let firstMovie = jsonResponse.movies[0];",
+                      "        pm.expect(firstMovie).to.have.property('id');",
+                      "        pm.expect(firstMovie).to.have.property('title');",
+                      "        pm.expect(firstMovie).to.have.property('duration_minutes');",
+                      "        pm.expect(firstMovie).to.have.property('genre');",
+                      "    }",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/movies",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "movies"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Добавить новый фильм в список id=new_movie_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "pm.test(\"Response body contains message=Movie created\", function () {",
+                      "    pm.expect(pm.response.text()).to.include(\"Movie created\");",
+                      "});",
+                      "pm.test(\"Response body contains correct movie details\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.movie.duration_minutes).to.be.a('number');",
+                      "    pm.expect(jsonData.movie.genre).to.be.a('string');",
+                      "    pm.expect(jsonData.movie.id).to.be.a('number');",
+                      "    pm.expect(jsonData.movie.title).to.be.a('string');",
+                      "});",
+                      "",
+                      "let jsonResponse = pm.response.json();",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"new_movie_id\", jsonResponse.movie.id);",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Test Movie\",\n  \"duration_minutes\": 120,\n  \"genre\": \"Test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/movies",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "movies"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Обновить данные фильма id=new_movie_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Переменная new_movie_id существует\", function () {",
+                      "    pm.expect(pm.collectionVariables.get(\"new_movie_id\")).to.exist;",
+                      "});",
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test(\"Response body contains 'message': 'Movie updated'\", function () {",
+                      "    pm.expect(pm.response.json().message).to.eql(\"Movie updated\");",
+                      "});",
+                      "pm.test(\"Movie title is updated to 'Matrix Reloaded'\", function () {",
+                      "    pm.expect(pm.response.json().movie.title).to.eql(\"Matrix Reloaded\");",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Matrix Reloaded\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/movies/{{new_movie_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "movies",
+                    "{{new_movie_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление фильмы (Негативный - у фильма есть сеанс)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 409\", function () {",
+                      "    pm.response.to.have.status(409);",
+                      "});",
+                      "pm.test(\"Response body contains error message\", function () {",
+                      "    pm.expect(pm.response.text()).to.include(\"Cannot delete movie with active sessions\");",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/movies/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "movies",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Sessions (Сеансы)",
+          "item": [
+            {
+              "name": "Создать сеанс id=created_session_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "pm.test(\"Response body contains 'Session created'\", function () {",
+                      "    pm.expect(pm.response.text()).to.include('Session created');",
+                      "});",
+                      "pm.test(\"Session object contains required fields\", function () {",
+                      "    var jsonData = pm.response.json();",
+                      "    pm.expect(jsonData.session).to.have.property('end_time');",
+                      "    pm.expect(jsonData.session).to.have.property('hall_id');",
+                      "    pm.expect(jsonData.session).to.have.property('id');",
+                      "    pm.expect(jsonData.session).to.have.property('movie_id');",
+                      "    pm.expect(jsonData.session).to.have.property('start_time');",
+                      "    pm.expect(jsonData.session.end_time).to.be.a('string');",
+                      "    pm.expect(jsonData.session.hall_id).to.be.a('number');",
+                      "    pm.expect(jsonData.session.id).to.be.a('number');",
+                      "    pm.expect(jsonData.session.movie_id).to.be.a('number');",
+                      "    pm.expect(jsonData.session.start_time).to.be.a('string');",
+                      "});",
+                      "",
+                      "let jsonResponse = pm.response.json();",
+                      "if (pm.response.code === 201) {",
+                      "    pm.collectionVariables.set(\"created_session_id\", jsonResponse.session.id);",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"movie_id\": {{new_movie_id}},\n    \"hall_id\": {{created_hall_id}},\n    \"start_time\": \"2027-07-01 18:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/sessions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "sessions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Создать сеанс (Негативный - занят зал в это время)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is 409\", function () {",
+                      "    pm.response.to.have.status(409);",
+                      "});",
+                      "pm.test(\"Error message is correct\", function () {",
+                      "    pm.expect(pm.response.text()).to.include(\"Hall is already booked for this time slot\");",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"movie_id\": {{new_movie_id}},\n    \"hall_id\": {{created_hall_id}},\n    \"start_time\": \"2027-07-01 18:30:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/sessions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "sessions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление сеанса id=created_session_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Переменная created_session_id существует\", function () {",
+                      "    pm.expect(pm.collectionVariables.get(\"created_session_id\")).to.exist;",
+                      "});",
+                      "pm.test(\"Сессия успешно удалена — статус 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/sessions/{{created_session_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "sessions",
+                    "{{created_session_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление сеанса (Негативный - есть билеты)",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Нельзя удалить сессию с билетами — статус 409\", () => {",
+                      "    pm.response.to.have.status(409);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/sessions/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "sessions",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cleanup (Очистка)",
+          "item": [
+            {
+              "name": "Удаление фильма без сеансов id=new_movie_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Переменная new_movie_id существует\", function () {",
+                      "    pm.expect(pm.collectionVariables.get(\"new_movie_id\")).to.exist;",
+                      "});",
+                      "pm.test(\"Фильм успешно удален — статус 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "pm.test(\"Response body contains correct message\", function () {",
+                      "    pm.expect(pm.response.json().message).to.eql(\"Movie deleted\");",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/movies/{{new_movie_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "movies",
+                    "{{new_movie_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Удаление зала id=created_hall_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Переменная created_hall_id существует\", function () {",
+                      "    pm.expect(pm.collectionVariables.get(\"created_hall_id\")).to.exist;",
+                      "});",
+                      "pm.test(\"Зал успешно удален — статус 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/halls/{{created_hall_id}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "halls",
+                    "{{created_hall_id}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "❤️ Health Check",
+      "item": [
+        {
+          "name": "Проверка работы сервера",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response body contains the correct message\", function () {",
+                  "    pm.expect(pm.response.json().message).to.eql(\"Server is running\");",
+                  "});",
+                  "pm.test(\"Response body contains the correct status\", function () {",
+                  "    pm.expect(pm.response.json().status).to.eql(\"ok\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "created_hall_id",
+      "value": ""
+    },
+    {
+      "key": "new_movie_id",
+      "value": ""
+    },
+    {
+      "key": "created_ticket_id",
+      "value": ""
+    },
+    {
+      "key": "created_session_id",
+      "value": ""
+    },
+    {
+      "key": "base_url",
+      "value": ""
+    }
+  ]
+}
