@@ -12,7 +12,7 @@ QA-инженер с опытом работы в продуктах с мног
 **API-тестирование:** Postman (коллекции, переменные окружения, скрипты), Charles (перехват, подмена), DevTools (Network, Console), curl + grep (ручные smoke-проверки), bash-скрипты (базово)  
 **Работа с данными:** SQL (SQLite, PostgreSQL) — JOIN, агрегация, подзапросы, транзакции  
 **Мобильное тестирование:** Android Studio (эмулятор, логи), Xcode (симулятор)  
-**Баг-трекинг:** YouTrack, YandexTracker
+**Баг-трекинг:** YouTrack, YandexTracker  
 **Контроль версий и CI/CD:** Git (ветвление, слияние, разрешение конфликтов), GitHub (Pull Requests, Actions). Пример: [репозиторий git-practice](https://github.com/mnlghtzxc/qa-git-practice) с историей коммитов и рабочим CI-пайплайном
 
 ---
@@ -28,7 +28,7 @@ QA-инженер с опытом работы в продуктах с мног
   **Инструменты:** SQLite, консольный клиент.
 
 - **[Анализ и отладка клиент-серверного взаимодействия](./projects/network-analysis-and-api-debugging/README.md)**
-  Анализ HTTP/HTTPS-трафика через DevTools и Charles Proxy, перехват запросов, подмена ответов, эмуляция ошибок сервера.
+  Анализ HTTP/HTTPS-трафика через DevTools и Charles Proxy, перехват запросов, подмена ответов, эмуляция ошибок сервера.  
   **Инструменты:** Chrome DevTools, Charles Proxy.
 
 - **[Linux CLI Smoke-тесты API: автоматическая проверка работоспособности эндпоинтов](./projects/linux-cli-api-smoke/README.md)**  
