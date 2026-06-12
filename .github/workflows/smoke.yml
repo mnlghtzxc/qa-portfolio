@@ -1,0 +1,62 @@
+# Имя workflow, будет видно на вкладке Actions в GitHub
+name: Smoke Check API
+
+# Когда запускать: при любом push в ветку main и при создании Pull Request
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  smoke-test:
+    # Тип виртуальной машины (Ubuntu)
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Клонируем репозиторий на раннер
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Запускаем PostgreSQL через Docker Compose
+      - name: Start PostgreSQL
+        run: |
+          cd projects/cinema-ticket-purchase-testing
+          docker compose up -d db
+          # Ждём, пока контейнер станет healthy
+          sleep 10
+
+      # 3. Устанавливаем Python и зависимости
+      - name: Setup Python and install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip
+          pip install -r projects/cinema-ticket-purchase-testing/requirements.txt
+
+      # 4. Загружаем тестовые данные в БД
+      - name: Seed database
+        run: |
+          cd projects/cinema-ticket-purchase-testing
+          docker exec -i cinema-db psql -U cinema_admin -d cinema_db < seed.sql
+
+      # 5. Запускаем Flask в фоновом режиме
+      - name: Start Flask API
+        run: |
+          cd projects/cinema-ticket-purchase-testing
+          python3 app.py &
+          # Ждём, пока сервер поднимется
+          sleep 5
+
+      # 6. Делаем smoke.sh исполняемым и запускаем
+      - name: Run smoke tests
+        run: |
+          cd projects/cinema-ticket-purchase-testing
+          chmod +x smoke.sh
+          ./smoke.sh
+
+      # 7. Останавливаем и удаляем контейнеры (опционально, для чистоты)
+      - name: Cleanup
+        if: always()  # Выполняется даже при падении предыдущих шагов
+        run: |
+          cd projects/cinema-ticket-purchase-testing
+          docker compose down -v
