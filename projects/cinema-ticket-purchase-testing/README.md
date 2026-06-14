@@ -85,11 +85,18 @@ API разделено на клиентскую и административн
 - [`docs/Observations.md`](./docs/Observations.md) — наблюдения и рекомендации
 - [`.github/workflows/smoke.yml`](../.github/workflows/smoke.yml) — CI/CD (GitHub Actions)
 
-## 🖼️ Скриншоты (будут добавлены)
-- Результат прогона коллекции Postman (All Green)
-- Вывод `smoke.sh` в терминале
-- Успешный workflow GitHub Actions
-- Пример SQL‑проверки в `psql`
+## 🖼️ Скриншоты
+![Postman All Green](docs/screenshots/postman-all-green.png)
+*Коллекция Postman (21 тест) — все PASS*
+
+![Smoke run](docs/screenshots/smoke-sh-pass.png)
+*Smoke‑скрипт в терминале — 9/9 PASS*
+
+![GitHub Actions](docs/screenshots/github-actions-pass.png)
+*Workflow Smoke Check API — успешный прогон*
+
+![SQL Check](docs/screenshots/sql-check.png)
+*Пример SQL‑проверки: пересечение сеансов (0 rows), Использованные билеты только на прошедших сеансах (0 rows)*
 
 ## 🚀 Как запустить
 
