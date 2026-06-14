@@ -83,7 +83,7 @@ API разделено на клиентскую и административн
 - [`docs/Test-Cases.md`](./docs/Test-Cases.md) — ручные тест‑кейсы
 - [`docs/Test-Strategy.md`](./docs/Test-Strategy.md) — тестовая стратегия
 - [`docs/Observations.md`](./docs/Observations.md) — наблюдения и рекомендации
-- [`.github/workflows/smoke.yml`](../.github/workflows/smoke.yml) — CI/CD (GitHub Actions)
+- [`.github/workflows/smoke.yml`](../../.github/workflows/smoke.yml) — CI/CD (GitHub Actions)
 
 ## 🖼️ Скриншоты
 ![Postman All Green](docs/screenshots/postman-all-green.png)
