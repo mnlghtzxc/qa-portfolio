@@ -77,7 +77,7 @@ API разделено на клиентскую и административн
 - [`schema.sql`](./schema.sql) — DDL (схема базы данных)
 - [`seed.sql`](./seed.sql) — тестовые данные
 - [`smoke.sh`](./smoke.sh) — smoke‑скрипт
-- [`postman/`](./postman/) — коллекция Postman
+- [`postman/collection`](./postman/🎬%20Cinema%20Ticket%20Purchase%20API.postman_collection.json) — коллекция Postman
 - [`sql/checks.sql`](./sql/checks.sql) — SQL‑проверки целостности
 - [`docs/API.md`](./docs/API.md) — документация API
 - [`docs/Test-Cases.md`](./docs/Test-Cases.md) — ручные тест‑кейсы
